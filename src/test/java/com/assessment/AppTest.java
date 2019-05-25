@@ -1,20 +1,77 @@
 package com.assessment;
 
+import com.assessment.constant.CoreConstants;
+import com.assessment.pojo.Box;
 import com.assessment.pojo.Graph;
 import com.assessment.pojo.Node;
 import com.assessment.util.DijkstraUtil;
-import org.junit.Test;
+import com.assessment.util.VolumeUtil;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertTrue;
+import static com.assessment.util.CSVUtil.fetchReader;
+import static com.assessment.util.CSVUtil.readAllLines;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-{
+public class AppTest {
+
+    private static List<Path> listOfFiles = new ArrayList<>();
+
+    @BeforeAll
+    public static void setup() {
+        try {
+            listOfFiles = Files.walk(Paths.get(CoreConstants.TEST_FOLDER_PATH))
+                    .filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testShortestPath() throws Exception {
+
+        Graph graph = generateGraphFromCSV(listOfFiles.get(0));
+
+
+    }
+
+
+    private Graph generateGraphFromCSV(Path path) throws Exception {
+
+        List<String[]> csvContentList = readAllLines(fetchReader(path));
+        Graph graph = DijkstraUtil.createGraphFromCSV(csvContentList);
+        DijkstraUtil.calculateShortestPathFromSource(graph, graph.getNodes().get(CoreConstants.SOURCE_TAG));
+
+        for (String[] data : csvContentList) {
+            assertShortestPath(data, graph);
+        }
+        return null;
+    }
+
+    private void assertShortestPath(String[] data, Graph graph) {
+        String name = data[1];
+        Box box = new Box(data[2].split(CoreConstants.CSV_MULTIPLY_TOKEN));
+        double volume = VolumeUtil.calculateShippingCost(graph.getNodes().get(name),
+                VolumeUtil.calculateVolumetricWeight(
+                        VolumeUtil.calculateVolume(box)));
+        assertEquals(volume, Double.valueOf(data[3]));
+    }
+
     @Test
     public void whenSPPSolved_thenCorrect() {
         /*ME	Stefan:100	Amir:1042	Martin:595	Adam:10	Philipp:128
@@ -49,12 +106,12 @@ public class AppTest
 
         Graph graph = new Graph();
 
-        graph.addNode("A",nodeA);
-        graph.addNode("B",nodeB);
-        graph.addNode("C",nodeC);
-        graph.addNode("D",nodeD);
-        graph.addNode("E",nodeE);
-        graph.addNode("F",nodeF);
+        graph.addNode("A", nodeA);
+        graph.addNode("B", nodeB);
+        graph.addNode("C", nodeC);
+        graph.addNode("D", nodeD);
+        graph.addNode("E", nodeE);
+        graph.addNode("F", nodeF);
 
         DijkstraUtil.calculateShortestPathFromSource(graph, nodeA);
 
@@ -94,6 +151,12 @@ public class AppTest
                     break;
             }
         }
+    }
+
+    @Test
+    public void testForShortestPath() {
+
+
     }
 
 }

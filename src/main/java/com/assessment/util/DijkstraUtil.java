@@ -1,12 +1,10 @@
 package com.assessment.util;
 
+import com.assessment.constant.CoreConstants;
 import com.assessment.pojo.Graph;
 import com.assessment.pojo.Node;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DijkstraUtil {
 
@@ -55,5 +53,54 @@ public class DijkstraUtil {
             }
         }
         return lowestDistanceNode;
+    }
+
+    public static Graph createGraphFromCSV(List<String[]> csvData) {
+
+        Graph graph = new Graph();
+
+        if (csvData != null && csvData.size() > 0) {
+            for (int i=0; i<csvData.size(); i++) {
+
+                Node primaryNode = null;
+                for (String node : csvData.get(i)) {
+                    if(node.equals(CoreConstants.ASSERTION_TOKEN)){
+                        return graph;
+                    }
+
+                    if (primaryNode == null) {
+                        primaryNode = fetchNodeFromGraph(graph, node);
+                    } else {
+                        Node adjacentNode = fetchNodeFromGraph(graph, fetchNodeName(node));
+                        primaryNode.getAdjacentNodes().put(adjacentNode, fetchNodeHard(node));
+                    }
+                }
+                csvData.remove(i);
+                i--;
+            }
+            return graph;
+        } else {
+            return null;
+        }
+    }
+
+    private static Node fetchNodeFromGraph(Graph graph, String nodeName) {
+        Node node;
+        if (graph.getNodes().get(nodeName) == null) {
+            node = new Node(nodeName);
+            graph.addNode(nodeName, node);
+        } else {
+            node = graph.getNodes().get(nodeName);
+        }
+
+        return node;
+    }
+
+    private static String fetchNodeName(String node) {
+        return node.split(":")[0];
+    }
+
+    private static Integer fetchNodeHard(String node) {
+        return Integer.parseInt(node.split(":")[1]);
     }
 }
