@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 public class VolumeUtil {
 
 
-    public static double calculateVolumetricWeight(Box box, Node node)
+    /*public static double calculateVolumetricWeight(Box box, Node node)
     {
         double vol = box.getBreadth() * box.getLength() * box.getHeight();
         double volw =  vol / 5000;
@@ -29,7 +29,7 @@ public class VolumeUtil {
 
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * fweight));
-    }
+    }*/
 
     /**
      * Rounds to the nearest 0.5
@@ -37,7 +37,7 @@ public class VolumeUtil {
      * @return volumetric weight
      */
     public static double roundVolume(double volume) {
-        double value =  Math.floor(volume) * 2.0 / 2.0;
+        double value =  Math.round(volume * 2.0)  / 2.0;
         return value <= 0 ? 0.5 : value;
     }
 
@@ -50,10 +50,15 @@ public class VolumeUtil {
         return (box.getHeight() * box.getBreadth() * box.getLength()) / 5000;
     }
 
-    public static double calculateShippingCost(Node node, double volume){
+    public static double calculateShippingCost(Node node, Box box){
+
+        double dmi = roundVolume((box.getHeight() * box.getBreadth() * box.getLength()) / 5000);
+
         DecimalFormat df = new DecimalFormat("#.##");
-        return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * volume));
+        return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * dmi));
     }
+
+
 
 
 

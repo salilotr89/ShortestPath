@@ -3,6 +3,7 @@ package com.assessment.util;
 import com.assessment.constant.CoreConstants;
 import com.assessment.pojo.Graph;
 import com.assessment.pojo.Node;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -64,7 +65,7 @@ public class DijkstraUtil {
 
                 Node primaryNode = null;
                 for (String node : csvData.get(i)) {
-                    if(node.equals(""))
+                    if(StringUtils.isBlank(node))
                         continue;
                     if(node.equals(CoreConstants.ASSERTION_TOKEN)){
                         return graph;
@@ -99,10 +100,10 @@ public class DijkstraUtil {
     }
 
     private static String fetchNodeName(String node) {
-        return node.split(":")[0];
+        return node.split(CoreConstants.CSV_SPLIT_TOKEN)[0];
     }
 
     private static Integer fetchNodeHard(String node) {
-        return Integer.parseInt(node.split(":")[1]);
+        return Integer.parseInt(node.split(CoreConstants.CSV_SPLIT_TOKEN)[1]);
     }
 }
