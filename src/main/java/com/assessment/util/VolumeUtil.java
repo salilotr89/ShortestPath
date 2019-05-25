@@ -8,13 +8,36 @@ import java.text.DecimalFormat;
 
 public class VolumeUtil {
 
+
+    public static double calculateVolumetricWeight(Box box, Node node)
+    {
+        double vol = box.getBreadth() * box.getLength() * box.getHeight();
+        double volw =  vol / 5000;
+        double b = volw - Math.round(volw);
+        double c = 0;
+        if( b <= .5 && 0 < b )
+        {
+            c=.5;
+        }
+        else //if( (.5 < b) && (b < 1 ) )
+        {
+            c=1;
+        }
+        if( b==0 ) c=0;
+        double fweight = volw - b + c;
+        //if( vol != 0 && ( Double.isNaN( fweight ) || fweight < 1 ) ) fweight = 1;
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * fweight));
+    }
+
     /**
      * Rounds to the nearest 0.5
      * @param volume of the box
      * @return volumetric weight
      */
-    public static double calculateVolumetricWeight(double volume) {
-        double value =  Math.round(volume * 2) / 2.0;
+    public static double roundVolume(double volume) {
+        double value =  Math.floor(volume) * 2.0 / 2.0;
         return value <= 0 ? 0.5 : value;
     }
 

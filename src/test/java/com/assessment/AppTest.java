@@ -66,9 +66,7 @@ public class AppTest {
     private void assertShortestPath(String[] data, Graph graph) {
         String name = data[1];
         Box box = new Box(data[2].split(CoreConstants.CSV_MULTIPLY_TOKEN));
-        double volume = VolumeUtil.calculateShippingCost(graph.getNodes().get(name),
-                VolumeUtil.calculateVolumetricWeight(
-                        VolumeUtil.calculateVolume(box)));
+        double volume = VolumeUtil.calculateVolumetricWeight(box,graph.getNodes().get(name));
         assertEquals(volume, Double.valueOf(data[3]));
     }
 

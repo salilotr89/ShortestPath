@@ -64,6 +64,8 @@ public class DijkstraUtil {
 
                 Node primaryNode = null;
                 for (String node : csvData.get(i)) {
+                    if(node.equals(""))
+                        continue;
                     if(node.equals(CoreConstants.ASSERTION_TOKEN)){
                         return graph;
                     }
