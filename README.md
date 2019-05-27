@@ -1,6 +1,11 @@
 # ShortestPath
 An attempt to calculate shortest path between recipients using Dijkstra algorithm.  
 
+Execution:
+
+mvn -DfilePath="/tmp/Algorythma/" test
+
+
 ## Problem Description
 -----------
 Suppose you have a network of friends and want to ship a package to any one of 
