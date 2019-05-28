@@ -79,6 +79,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <!-- latest version (2.20.1) does not work well with JUnit5 -->
                 <version>2.19.1</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <filePath>C:\Users\sadiq\Desktop\Test</filePath>
+                    </systemPropertyVariables>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
