@@ -9,8 +9,6 @@ public class Node {
 
     private String name;
 
-    private LinkedList<Node> shortestPath = new LinkedList<>();
-
     private Integer distance = Integer.MAX_VALUE;
 
     private Map<Node, Integer> adjacentNodes = new HashMap<>();
@@ -47,12 +45,5 @@ public class Node {
         this.distance = distance;
     }
 
-    public List<Node> getShortestPath() {
-        return shortestPath;
-    }
-
-    public void setShortestPath(LinkedList<Node> shortestPath) {
-        this.shortestPath = shortestPath;
-    }
 
 }

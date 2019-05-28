@@ -7,10 +7,10 @@ import java.util.Set;
 
 public class Graph {
 
-    private Map<String,Node> nodes = new HashMap<>();
+    private Map<String, Node> nodes = new HashMap<>();
 
-    public void addNode(String name,Node nodeA) {
-        nodes.put(name,nodeA);
+    public void addNode(String name, Node nodeA) {
+        nodes.put(name, nodeA);
     }
 
     public Map<String, Node> getNodes() {

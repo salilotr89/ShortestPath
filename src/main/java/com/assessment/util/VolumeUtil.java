@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 
 public class VolumeUtil {
 
-
+    //Javascript method analyzed to determine any missing conditions when calculating weight.
     /*public static double calculateVolumetricWeight(Box box, Node node)
     {
         double vol = box.getBreadth() * box.getLength() * box.getHeight();
@@ -50,10 +50,14 @@ public class VolumeUtil {
         return (box.getHeight() * box.getBreadth() * box.getLength()) / 5000;
     }
 
+    /**
+     * Calculates the shipping cost based on the volumetric weight.
+     * @param node fetches hard from the node
+     * @param box used to calculated volume
+     * @return value for assertion
+     */
     public static double calculateShippingCost(Node node, Box box){
-
         double dmi = roundVolume((box.getHeight() * box.getBreadth() * box.getLength()) / 5000);
-
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * dmi));
     }

@@ -23,7 +23,7 @@ import static com.assessment.util.CSVUtil.readAllLines;
 
 public class AppTest {
 
-    private static Logger LOGGER = Logger.getLogger("InfoLogging");
+    private static Logger LOGGER = Logger.getLogger(AppTest.class.getName());
 
     public static List<Path> setup() throws IOException {
         String folderPath = System.getProperty(CoreConstants.TEST_FOLDER_VARIABLE);
@@ -35,8 +35,8 @@ public class AppTest {
 
     }
 
-    @ParameterizedTest
-    @MethodSource("setup")
+    @ParameterizedTest//Used to pass parameter to the test.
+    @MethodSource("setup")//Calling the method mentioned to fetch a list and then repeat the test for each index
     public void testShortestPath(Path path) throws Exception {
         LOGGER.info("Executing test for filename: " + path.getFileName());
         generateGraphFromCSV(path);
@@ -44,6 +44,11 @@ public class AppTest {
     }
 
 
+    /**
+     * Takes a path, read the file and create a graph.
+     * @param path CSV path
+     * @throws Exception
+     */
     private void generateGraphFromCSV(Path path) throws Exception {
 
         List<String[]> csvContentList = readAllLines(fetchReader(path));
@@ -55,6 +60,11 @@ public class AppTest {
         }
     }
 
+    /**
+     * Takes a graph and data from csv to run assertions
+     * @param data data inside csv
+     * @param  graph generated from csv
+     */
     private void assertShortestPath(String[] data, Graph graph) {
         String name = data[1];
         Box box = new Box(data[2].split(CoreConstants.CSV_MULTIPLY_TOKEN));
