@@ -67,6 +67,8 @@ public class AppTest {
      */
     private void assertShortestPath(String[] data, Graph graph) {
         String name = data[1];
+        LOGGER.info("Running assertion for:" + name);
+
         Box box = new Box(data[2].split(CoreConstants.CSV_MULTIPLY_TOKEN));
 
         if (data[3].equals(CoreConstants.CSV_INFINITY_TOKEN))
