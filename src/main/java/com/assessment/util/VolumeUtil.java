@@ -58,8 +58,15 @@ public class VolumeUtil {
      */
     public static double calculateShippingCost(Node node, Box box){
         double dmi = roundVolume((box.getHeight() * box.getBreadth() * box.getLength()) / 5000);
+        double weightInKg = roundVolume(box.getWeight()/1000);
+
         DecimalFormat df = new DecimalFormat("#.##");
-        return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * dmi));
+
+        //checking if the weight is greater than actual weight
+        if(dmi >= weightInKg)
+            return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * dmi));
+        else
+            return Double.valueOf(df.format(Math.sqrt(node.getDistance()) * weightInKg));// calculating against the actual weight
     }
 
 
